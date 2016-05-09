@@ -102,7 +102,7 @@ instance Sust (Term, Sust_1, Term) where
     sust (Impl t1 t2) sus = Impl (sust t1 sus) (sust t2 sus)
     sust (Equi t1 t2) sus = Equi (sust t1 sus) (sust t2 sus)
     sust (Nequ t1 t2) sus = Nequ (sust t1 sus) (sust t2 sus)
-    sust t1@(Var ch) (ts1,(Sust_1 v2 ts2), v1)
+    sust t1@(Var ch) (ts1,(Sust_1 v1 ts2), v2)
        | v1 == v2 = error "Sustitución Ambigüa 2"
        | v1 == t1 = ts1
        | v2 == t1 = ts2
@@ -120,7 +120,7 @@ instance Sust (Term, Term, Sust_1, Term, Term) where
     sust (Impl t1 t2) sus = Impl (sust t1 sus) (sust t2 sus)
     sust (Equi t1 t2) sus = Equi (sust t1 sus) (sust t2 sus)
     sust (Nequ t1 t2) sus = Nequ (sust t1 sus) (sust t2 sus)
-    sust t1@(Var ch) (ts1,ts2,(Sust_1 v3 ts3),v2, v1)
+    sust t1@(Var ch) (ts1,ts2,(Sust_1 v1 ts3),v2, v3)
        | v1 == v2 || v1 == v3 || v2 == v3 = error "Sustitución Ambigüa 3"
        | v1 == t1 = ts1
        | v2 == t1 = ts2
@@ -293,17 +293,17 @@ verify = let theorem = (true === ((p <==> p) <==> (q <==> q))) in
          >>=
          statement 3.2 with (p=:p) using lambda z (z)
          >>=
-         statement 3.1 with (p <==> q,p=:r,p) using lambda z (z)
+         statement 3.1 with (p <==> q,p=:p,r) using lambda z (z)
          >>=
          statement 3.3 with (p=:p) using lambda z (z <==> p)
          >>=
          statement 3.3 with (p=:p) using lambda z (p <==> z)
          >>=
-         statement 3.1 with (p <==> q,q=:r,q) using lambda z (z)
+         statement 3.1 with (p <==> q,q=:q,r) using lambda z (z)
          >>=
-         statement 3.1 with (q,p=:q,r) using lambda z (z <==> q)
+         statement 3.1 with (q,p=:r,q) using lambda z (z <==> q)
          >>=
-         statement 3.1 with (p <==> p,q=:r,p) using lambda z (z)
+         statement 3.1 with (p <==> p,q=:p,r) using lambda z (z)
          >>=
          done theorem
 
