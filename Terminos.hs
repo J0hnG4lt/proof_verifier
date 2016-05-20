@@ -1,6 +1,13 @@
 {-# LANGUAGE FlexibleInstances #-}
 module Terminos  where
 
+{-
+    Estudiante: Georvic Tur
+    Carnet: 12-11402
+    
+    Correo: alexanderstower@gmail.com
+-}
+
 data Term = Var Char
           | Bools Bool
           | Neg Term
@@ -58,13 +65,15 @@ true = Bools True
 false :: Term
 false = Bools False
 
-
+neg :: Term -> Term
+neg t1 = Neg t1
 
 data Sust_1 = Sust_1 Term Term
 
 instance Show Sust_1 where
     show (Sust_1 var term) = show term ++ "=:" ++ show var
 
+infix 0 =:
 (=:) :: Term -> Term -> Sust_1
 term1 =: var@(Var ch) = Sust_1 var term1
 _ =: _ = error "Argumentos inválidos en =:"
